@@ -1,37 +1,86 @@
-fn main() {
-    let mut curr = 50;
-
+fn day1() -> u32 {
     let input = get_input();
-    let mut attempts = 0;
+    let mut zeroes = 0;
+    let mut dial = 50;
 
     for line in input.lines() {
-        let steps = line.replace("L", "-").replace("R", "").parse::<i32>().unwrap() % 100;
+        let lr = line.chars().nth(0).unwrap();
+        let steps = line.replace("R", "").replace("L", "").parse::<u32>().unwrap();
 
-        curr += steps;
-        if curr <= 0 {
-            curr += 100;
+        for n in 0..steps {
+            match lr {
+                'L' => { 
+                    dial-=1;
+                    if dial < 0 {
+                        dial+=100;
+                    }
+                },
+                'R' => {
+                    dial+=1;
+                    if dial >= 100 {
+                        dial-=100;
+                    }
+                },
+                _ => unreachable!(),
+            } 
+
         }
-        if curr >= 100 {
-            curr -= 100;
+        
+        if dial == 0 {
+            zeroes+=1;
         }
 
-        if curr == 0 {
-            attempts+=1;
-        }
-
-        println!("line: {}, curr: {}", line, curr);
+        println!("line: {}, dial: {}, zeroes: {}", line, dial, zeroes)
     }
 
-    println!("attempts: {}", attempts)
+    zeroes
+}
+fn day2() -> u32 {
+    let input = get_input();
+    let mut zeroes = 0;
+    let mut dial = 50;
+
+    for line in input.lines() {
+        let lr = line.chars().nth(0).unwrap();
+        let steps = line.replace("R", "").replace("L", "").parse::<u32>().unwrap();
+
+        for n in 0..steps {
+            match lr {
+                'L' => { 
+                    dial-=1;
+                    if dial < 0 {
+                        dial+=100;
+                    }
+                },
+                'R' => {
+                    dial+=1;
+                    if dial >= 100 {
+                        dial-=100;
+                    }
+                },
+                _ => unreachable!(),
+            } 
+
+            if dial == 0 {
+                zeroes+=1;
+            }
+        }
+
+        println!("line: {}, dial: {}, zeroes: {}", line, dial, zeroes)
+    }
+
+    zeroes
 }
 
-
-#[cfg(feature="examples")]
-fn get_input() -> &'static str {
-    include_str!("example.txt")
+fn main() {
+    println!("Day1: {}", day1());
+    println!("Day2: {}", day2());
 }
 
-#[cfg(feature="live")]
 fn get_input() -> &'static str {
-    include_str!("input.txt")
+    if cfg!(feature="examples") {
+        include_str!("example.txt")
+    } else {
+        include_str!("input.txt")
+    }
 }
