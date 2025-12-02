@@ -1,4 +1,4 @@
-fn day1() -> u32 {
+fn part2() -> u32 {
     let input = get_input();
     let mut zeroes = 0;
     let mut dial = 50;
@@ -35,7 +35,7 @@ fn day1() -> u32 {
 
     zeroes
 }
-fn day2() -> u32 {
+fn part1() -> u32 {
     let input = get_input();
     let mut zeroes = 0;
     let mut dial = 50;
@@ -73,8 +73,8 @@ fn day2() -> u32 {
 }
 
 fn main() {
-    println!("Day1: {}", day1());
-    println!("Day2: {}", day2());
+    println!("Part1: {}", part1());
+    println!("Part2: {}", part2());
 }
 
 fn get_input() -> &'static str {
